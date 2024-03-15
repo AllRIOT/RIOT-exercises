@@ -13,6 +13,9 @@ adapted for the course "Wireless Sensor Networks" at TU Dresden.
 Go through the exercises starting with [`00-getting-started`](./00-getting-started/README.md).
 Each exercise contains a `README.md` with detailed instructions and tasks to solve.
 
+   If you prefer to do the exercises in Rust instead of C, there is a parallel list starting at [`rust01-hello-world`](./rust01-hello-world/README.md).
+   The exercises are generally similar, and only differ in details.
+
 
 ## Conventions
 Throughout the tutorials, we will specify commands and outputs.
