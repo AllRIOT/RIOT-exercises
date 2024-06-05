@@ -77,6 +77,11 @@ Clock::msec().set_during(
 });
 ```
 
+Note that the LED 1 was sent from the main thread to the interrupt handler defined in the first closure.
+Code that should execute inside an interrupt handler is limited
+(for example, no blocking operations should occur).
+The requirement that data sent to an interrupt handler is `Send` prevents many mistakes there.
+
 **3. Recompile and build the application. Press the reset button.**
 ```sh
 $ make all flash term
