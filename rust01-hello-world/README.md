@@ -1,7 +1,7 @@
 # Hello World!
 
 This is a basic example how to use RIOT in your embedded application.
-It prints out the famous text `Hello World!`.
+It prints out a variation of the famous text `Hello World!`.
 The code itself may look like your usual Rust beginners hello-world example.
 
 ## Task 1
@@ -35,11 +35,11 @@ $ make flash
 $ make term
 ```
 
-**6. Reset your board by pressing the 'Reset' button. You should see the "Hello World!" message.**
+**6. Reset your board by pressing the 'Reset' button. You should see the "Hello Rust!" message.**
 
 ```sh
 main(): This is RIOT! (Version: 2024.01)
-Hello World!
+Hello Rust!
 You are running RIOT on a(n) feather-nrf52840-sense board.
 ```
 
