@@ -13,7 +13,7 @@ arguments.
 To change to this directory from a different exercise, use the following command in the terminal.
 
 ```sh
-$ cd ../03r-shell
+$ cd ../rust03-shell
 ```
 
 ## Implementing commands

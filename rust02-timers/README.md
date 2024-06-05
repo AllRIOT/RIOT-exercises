@@ -24,7 +24,7 @@ To learn more about the `ztimer` module, visit the [documentation page](https://
 To change to this directory from a different exercise, use the following command in the terminal.
 
 ```sh
-$ cd ../02r-timers
+$ cd ../rust02-timers
 ```
 
 ## Task 1
