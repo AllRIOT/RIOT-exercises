@@ -74,7 +74,7 @@ Clock::msec().set_during(
 ```
 
 ```rust
-}
+});
 ```
 
 **3. Recompile and build the application. Press the reset button.**

@@ -96,4 +96,4 @@ keys/
 
 # Rust generated files
 target/
-Cargo.toml
+Cargo.lock
