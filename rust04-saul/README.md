@@ -113,3 +113,23 @@ Detect when your board has been flipped 180 ° and turn the (blue) `LED1` on.
 **Don't forget the turn the LED off when the value does not surpass the threshold.**
 
 **3. Build and flash the application. Open a serial port communication.**
+
+## Task 5
+
+SAUL also has actuators; in particular, there is an actuator of type `Some(Class::Actuator(Some(ActuatorClass::LedRgb))`.
+Use that indicator to show the spatial orientation of your board.
+
+Before writing, you will need to transform the value range,
+because this RGB LED implementation takes values in 0..=255 Device RGB range.
+For eye protection, you might use:
+
+```rust
+let rgb = [
+    (accel.value()[0] / 50).clamp(0, 100),
+    (accel.value()[1] / 50).clamp(0, 100),
+    (accel.value()[2] / 50).clamp(0, 100),
+];
+let rgb = Phydat::new(&rgb, None, 0);
+```
+
+SAUL actuators have a `.write()` method analogous to sensors `.read()` method.
