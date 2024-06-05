@@ -1,4 +1,8 @@
-# Wireless Sensor Networks - Exercises
+# RIOT in the Internet of Things - Exercises
+
+This is chrysn's version of the exercises, last used for [the RIOT summit](https://summit.riot-os.org/2024/).
+
+Unless this repository has been updated recently, consider looking at [the original exercises from HAW Hamburg's INETRG](https://github.com/inetrg/exercises) or [the TU Dresden version](https://github.com/netd-tud/WSN-exercises), which this was derived from.
 
 ## Overview
 
