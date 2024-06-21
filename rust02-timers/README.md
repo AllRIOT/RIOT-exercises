@@ -39,12 +39,12 @@ $ make all flash term
 Modify the application so that the board blinks the LED only for 250 ms for 10 iterations.
 
 **1. Adapt the loop to be true for 10 iterations:**
-```C
+```rust
 for _ in 0..10 {
 ```
 
 **2. Sleep only for 250 ms for each iteration after setting the LED to "on":**
-```C
+```rust
 Clock::msec().sleep(Duration::from_millis(250));
 ```
 

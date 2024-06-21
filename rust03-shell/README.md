@@ -31,7 +31,7 @@ and finally the function that handles the command.
 
 Secondly, we define a handler function. In our example we would define:
 
-```C
+```rust
 pub fn echo<'a>(_w: &mut impl Write, args: impl IntoIterator<Item=&'a str>) {
   /* do something cool */
 }
