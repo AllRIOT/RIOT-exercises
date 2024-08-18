@@ -1,6 +1,7 @@
 # RIOT in the Internet of Things - Exercises
 
-This is chrysn's version of the exercises, last used for [IT-S NOW 2024](https://its-now.science/).
+This is chrysn's version of the exercises, last used for [at FrOSCon](https://programm.froscon.org/2024/events/3228.html).
+It contains specific extra examples for portability of Rust code.
 
 Unless this repository has been updated recently, consider looking at [the original exercises from HAW Hamburg's INETRG](https://github.com/inetrg/exercises), which this was forked from.
 
