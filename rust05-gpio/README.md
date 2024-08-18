@@ -183,3 +183,61 @@ Note that the safety of this relies on GPIO interrupts not preempting themselves
 While RIOT can be used with priorized interrupts, the same interrupt will not trigger a jump while it is being executed.
 
 **6. Build and flash the application.**
+
+## Task 3
+
+Refactor the blinking loop to make it portable across the embedded Rust ecosystem.
+By not using methods on a RIOT [`OutputGPIO`](https://rustdoc.etonomy.org/riot_wrappers/gpio/struct.OutputGPIO.html)
+but accessing it as an implementation of embedded-hal's [`OutputPin`](https://docs.rs/embedded-hal/latest/embedded_hal/digital/trait.OutputPin.html),
+and doing the same with the ZTimer [clock](https://rustdoc.etonomy.org/riot_wrappers/ztimer/struct.Clock.html)
+(as embedded-hal's [`DelayNs`](https://docs.rs/embedded-hal/latest/embedded_hal/delay/trait.DelayNs.html)),
+we create the same binary program
+using different abstractions.
+
+* **1. Move the loop into a dedicated function. The signature could look like this:**
+
+```rust
+fn blink(mut led0: OutputGPIO, clock: Clock<1000>) -> ! {
+```
+
+You may need to adjust the convenience imports; the Rust compiler will make sensible suggestions.
+
+* **2. Add the [`embedded-hal`](https://crates.io/crates/embedded-hal) crate as a dependency:**
+
+```sh
+$ cargo add embedded-hal
+```
+
+Note that this does not really increase the dependency tree:
+`riot-wrappers` already depends on that crate,
+but we need to explicitly depend on it to name its traits.
+
+* **3. Alter the `blink` function to be generic over the traits' implementation:**
+  **The signature could look like this:**
+
+```rust
+fn blink2(
+    mut led0: impl embedded_hal::digital::OutputPin,
+    mut clock: impl embedded_hal::delay::DelayNs,
+) -> ! {
+```
+
+While GPIO pins' inherent methods are identical to the OutputPin's,
+generic clocks require exclusive clock access and do not provide a [`Duration`](https://doc.rust-lang.org/std/time/struct.Duration.html) based sleep.
+Instead, look up a suitable delay method in the [documentation of `DelayNs`](https://docs.rs/embedded-hal/latest/embedded_hal/delay/trait.DelayNs.html).
+
+## Task 4
+
+With another board available,
+porting between RIOT boards is trivial.
+
+* **1. Connect a micro:bit v2 to your system.**
+
+* **2. Add a LED0 definition for the `BOARD == "microbit-v2"` case`.**
+  **Use Port 0 Pin 20 -- that's actually enabling the microphone, but it is the closest that board has to a simple LED.**
+
+* **3. Flash the example:**
+
+```sh
+$ BOARD=microbit-v2 make all flash
+```
