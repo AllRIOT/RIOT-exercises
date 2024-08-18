@@ -41,11 +41,19 @@ use riot_wrappers::gpio::{GPIO, OutputMode};
 **Port 1, Pin 9:**
 
 ```rust
-let mut led0 = GPIO::from_port_and_pin(1, 9)
+let led0 = match riot_wrappers::BOARD {
+    "feather-nrf52840-sense" => GPIO::from_port_and_pin(1, 9),
+    _  => panic!("No pinout known for this board"),
+};
+
+let mut led0 = led0
     .expect("Pin should be available")
     .configure_as_output(OutputMode::Out)
     .expect("Pin should be usable as output");
 ```
+
+By gating the pin creation with the board's name,
+we can ensure that changing the board will not accidentally drive a pin that releases the magic smoke.
 
 **3. The LEDs on the board are on when the GPIO outputs `1`.**
 **Inside the `main` function, periodically set the GPIO to high (turning the LED on) and low (turning the LED off):**
