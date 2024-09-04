@@ -62,6 +62,10 @@ Add a new timer to turn LED1 on after 1 second.
 let mut led1 = riot_wrappers::led::LED::<1>::new();
 ```
 
+The `::<1>` is a generic argument:
+The LED subsystem of RIOT is optimized for low latency to assist in debugging,
+and the generic argument ensures that the number is known at build time.
+
 **2. Around the loop, call the [`set_during`](https://rustdoc.etonomy.org/riot_wrappers/ztimer/struct.Clock.html#method.set_during) function, and in the callback, turn on LED1.**
 
 ```rust
