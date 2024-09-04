@@ -33,10 +33,10 @@ $ cd ../rust02-timers
 $ make all flash term
 ```
 
-**2. Reset the board. You should see a "Timeout!" string after 2 seconds.**
+**2. Reset the board. You should see "This is a timers example", and then a "Timeout!" string after 4 seconds.**
 
 ## Task 2
-Modify the application so that the board blinks the LED only for 250 ms for 10 iterations.
+Modify the application so that the board has the LED on for only 250 ms, and runs only 10 iterations.
 
 **1. Adapt the loop to be true for 10 iterations:**
 ```rust
@@ -72,6 +72,8 @@ Clock::msec().set_during(
         ).expect("1 second is expressible in millisecond ticks"),
     || {
 ```
+
+(existing `for` loop remains in here)
 
 ```rust
 });
