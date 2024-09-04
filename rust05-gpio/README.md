@@ -186,6 +186,22 @@ While RIOT can be used with priorized interrupts, the same interrupt will not tr
 
 ## Task 3
 
+With another board available,
+porting between RIOT boards is trivial.
+
+* **1. Connect a micro:bit v2 to your system.**
+
+* **2. Add a LED0 definition for the `BOARD == "microbit-v2"` case`.**
+  **Use Port 0 Pin 20 -- that's actually enabling the microphone, but it is the closest that board has to a simple LED.**
+
+* **3. Flash the example:**
+
+```sh
+$ BOARD=microbit-v2 make all flash
+```
+
+## Task 4
+
 Refactor the blinking loop to make it portable across the embedded Rust ecosystem.
 By not using methods on a RIOT [`OutputGPIO`](https://rustdoc.etonomy.org/riot_wrappers/gpio/struct.OutputGPIO.html)
 but accessing it as an implementation of embedded-hal's [`OutputPin`](https://docs.rs/embedded-hal/latest/embedded_hal/digital/trait.OutputPin.html),
@@ -225,19 +241,3 @@ fn blink2(
 While GPIO pins' inherent methods are identical to the OutputPin's,
 generic clocks require exclusive clock access and do not provide a [`Duration`](https://doc.rust-lang.org/std/time/struct.Duration.html) based sleep.
 Instead, look up a suitable delay method in the [documentation of `DelayNs`](https://docs.rs/embedded-hal/latest/embedded_hal/delay/trait.DelayNs.html).
-
-## Task 4
-
-With another board available,
-porting between RIOT boards is trivial.
-
-* **1. Connect a micro:bit v2 to your system.**
-
-* **2. Add a LED0 definition for the `BOARD == "microbit-v2"` case`.**
-  **Use Port 0 Pin 20 -- that's actually enabling the microphone, but it is the closest that board has to a simple LED.**
-
-* **3. Flash the example:**
-
-```sh
-$ BOARD=microbit-v2 make all flash
-```
