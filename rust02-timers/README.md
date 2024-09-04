@@ -77,6 +77,11 @@ Clock::msec().set_during(
 });
 ```
 
+The `||` indicates a [closure](https://doc.rust-lang.org/book/ch13-01-closures.html):
+a block of code that is not evaluated immediately,
+but passed into another call as a combination of a function and any variables captured from the context.
+(They do look a bit odd without arguments; the syntax may look more intuitive in examples with arguments such as `differentiate(|x| x**2 - 2*x + 1);`).
+
 Note that the LED 1 was sent from the main thread to the interrupt handler defined in the first closure.
 Code that should execute inside an interrupt handler is limited
 (for example, no blocking operations should occur).
