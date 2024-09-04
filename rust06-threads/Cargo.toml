@@ -14,7 +14,7 @@ panic = "abort"
 
 [dependencies]
 riot-sys = "0.7.12"
-riot-wrappers = { version = "0.8", features = ["set_panic_handler", "panic_handler_format"] }
+riot-wrappers = { version = "0.9.1", features = ["set_panic_handler", "panic_handler_format"] }
 
 rust_riotmodules = { path = "../RIOT/sys/rust_riotmodules/" }
 static_cell = "2.1.0"

@@ -19,7 +19,7 @@ riot_main!(main);
 
 fn main() {
     // Startup delay to ensure the terminal is connected
-    Clock::sec().sleep(Duration::from_secs(5));
+    Clock::sec().sleep_extended(Duration::from_secs(5));
 
     println!("GPIOs example.");
 
