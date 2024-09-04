@@ -22,7 +22,7 @@ fn main() {
 
     /* [TASK 1: create the thread here] */
 
-    let mut led0 = riot_wrappers::led::LED::<0>::new().expect("Our board has an LED0");
+    let mut led0 = riot_wrappers::led::LED::<0>::new_checked().expect("Our board has an LED0");
 
     loop {
         println!(
