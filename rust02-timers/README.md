@@ -45,7 +45,7 @@ for _ in 0..10 {
 
 **2. Sleep only for 250 ms for each iteration after setting the LED to "on":**
 ```rust
-Clock::msec().sleep(Duration::from_millis(250));
+Clock::msec().sleep_extended(Duration::from_millis(250));
 ```
 
 **3. Build and flash the application. Connect to the serial port:**

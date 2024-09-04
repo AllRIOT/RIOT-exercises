@@ -88,9 +88,9 @@ fn blinky_handler() {
         );
 
         led1.on().unwrap();
-        Clock::msec().sleep(Duration::from_millis(20));
+        Clock::msec().sleep_extended(Duration::from_millis(20));
         led1.off().unwrap();
-        Clock::msec().sleep(Duration::from_millis(180));
+        Clock::msec().sleep_extended(Duration::from_millis(180));
     }
 }
 ```

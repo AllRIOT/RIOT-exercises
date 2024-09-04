@@ -16,13 +16,13 @@ riot_main!(main);
 
 fn main() {
     // Startup delay to ensure the terminal is connected
-    Clock::sec().sleep(Duration::from_secs(5));
+    Clock::sec().sleep_extended(Duration::from_secs(5));
 
     println!("Thread example.");
 
     /* [TASK 1: create the thread here] */
 
-    let mut led0 = riot_wrappers::led::LED::<0>::new();
+    let mut led0 = riot_wrappers::led::LED::<0>::new().expect("Our board has an LED0");
 
     loop {
         println!(
@@ -33,8 +33,8 @@ fn main() {
         );
 
         led0.on().unwrap();
-        Clock::msec().sleep(Duration::from_millis(100));
+        Clock::msec().sleep_extended(Duration::from_millis(100));
         led0.off().unwrap();
-        Clock::msec().sleep(Duration::from_millis(900));
+        Clock::msec().sleep_extended(Duration::from_millis(900));
     }
 }

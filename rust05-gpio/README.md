@@ -61,9 +61,9 @@ we can ensure that changing the board will not accidentally drive a pin that rel
 ```rust
 loop {
     led0.set_high();
-    Clock::msec().sleep(Duration::from_millis(200));
+    Clock::msec().sleep_extended(Duration::from_millis(200));
     led0.set_low();
-    Clock::msec().sleep(Duration::from_millis(800));
+    Clock::msec().sleep_extended(Duration::from_millis(800));
 }
 ```
 
