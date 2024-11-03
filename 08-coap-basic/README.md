@@ -307,7 +307,7 @@ $ git add .
 $ git commit -m "Add sensor CoAP resources"
 ```
 
-**5. Make a fork of [the project](https://github.com/smartuni/exercises)**
+**5. Make a fork of [the project](https://github.com/AllRIOT/RIOT-exercises)**
 **on your own account, using GitHub's website.**
 
 **6. Add the new remote to your repository. Replace with the correct username**
