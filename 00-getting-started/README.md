@@ -9,70 +9,48 @@ RIOT aims to implement all relevant open standards supporting an Internet of Thi
 
 Pretty cool, right?
 
-But before getting started with coding and real hardware,
-let's understand what is inside the RIOT Kit in front of you.
+## Prepare your development setup
 
-<img src="RIOT-Kit-closed.jpg" alt="Photo of closed RIOT Kit" width="25%">
+The best - or at least easiest way - to work on RIOT is to use Linux as your host OS. You can either run it natively on your machine
+or in a virtual machine like [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+You can find the [general instructions to set up your RIOT development environment](https://doc.riot-os.org/getting-started.html)
 
-## RIOT Kit Content
+## RIOT on the nrf52840 Development Kit
 
-When opening the RIOT Kit, you will find the following content:
+![RIOT on nrf52840dk](nrf-riot.jpg)
+### Programmers
+When working with RIOT on the [nrf52840dk](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dk) a couple of things are useful to know.
+Since the board has its own SEGGER J-Link debugger/programmer on board no additional hardware is required for flashing the board with your RIOT application or debugging one. (In fact, you can even use this board's SEGGER device to flash other devices.) From the software side you can flash the board with SEGGER's [J-Link tool](https://www.segger.com/downloads/jlink/) or [OpenOCD](https://openocd.org).
 
-1. [**Raspberry Pi**](https://www.raspberrypi.com/documentation/computers/getting-started.html)
-  already completely setup to be used as development machine throughout these exercises.
-2. **Power Adapter for the Raspberry Pi**
-3. [**Adafruit Feather Sense**](https://learn.adafruit.com/adafruit-feather-sense) (RFM98 @ 433 MHz):
-  an IoT device featuring wireless connectivity and many on-board sensors
-4. **USB Cable** to connect the Feather Sense to the development machine
-5. [**Adafruit LoRa Radio FeatherWing**](https://learn.adafruit.com/radio-featherwing):
-  an extension board for kilometer-range wireless connectivity using LoRa
-6. **Jumper Cables** (12x) to connect external devices such as LEDs or buttons to the Feather Sense
-7. **Breadboard** to build semi-permanent prototypes of electronic circuits
+### Reset Pin Configuration
+As documented in the [RIOT documentation](https://doc.riot-os.org/group__boards__nrf52840dk.html) the *reset* pin of the board is per default no configured to perform a reset. However, the behavior of this pin can be configured via software. The RIOT repository provides the [nrf52_resetpin_cfg](https://github.com/RIOT-OS/RIOT/tree/master/dist/tools/nrf52_resetpin_cfg) application in order to do so. However, in some cases (on some revisions of the chip?) this will leave the MCU in a *locked* state. In this case, you can use the tool [nrfjprog](https://www.nordicsemi.com/Products/Development-tools/nrf-command-line-tools) in order to configure the pin via the command:
+```
+nrfjprog --pinresetenable
+```
 
-<img src="RIOT-Kit.png" alt="Photo of open RIOT Kit with numbered content" width="50%">
-
-## Hardware Setup
-
-- Power the Raspberry Pi (1) using the power adapter (2).
-- Connect the Feather Sense (3) to the Raspberry Pi (1) using the USB cable (4).
-
-<img src="connected.jpg" alt="Photo of the Raspberry Pi (right) connected to the Feather Sense (left)" width="50%">
-
-## Software Setup
-
-- With your own computer, connect to the locally provided WiFi network:
-  - SSID: `hack_n_ack`
-  - Password: `ThefriendlyOSfortheIoT`
-
-- Open `https://riot-raspi-ffffff.local:8080` in your browser, replacing `ffffff` with the six-digit identifier on the back of your Raspberry Pi
-  - Your browser might warn you about the self-signed certificate on the Raspberry Pi.
-    If so, click on "Advanced" and then on "Accept the Risk and Continue" (Firefox) or "Proceed to riot-raspi-ffffff.local (unsafe)" (Chrome).
-
-    <img src="tls-warning-firefox.png" alt="Screenshot of Firefox certificate warning" width="30%">
-    <img src="tls-warning-chrome.png" alt="Screenshot of Chrome certificate warning" width="30%">
-
-
-- When asked, provide the following credentials:
-  - User: `pi`
-  - Password: `riottutorial`
-
-- Cloud9 IDE should show up in the browser
-
-  <img src="cloud9.png" alt="Screenshot of cloud9 IDE" width="50%">
-
-The tutorial files are already preloaded.
-Cloud9 IDE lets you browse through the files using the directory tree on the left,
-write code and preview Markdown (such as this document) on the right,
-and access the console of the Raspberry Pi on the lower right.
-
-## Working with the RIOT Kit at home
-
-If you want to work with the RIOT Kit at home,
-the easiest option is to connect the Raspberry Pi via Ethernet to your home router.
-Alternatively, you may add the credentials of your home WiFi to the Raspberry Pi
-as explained here: https://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/
-
-If you prefer to develop without the Raspberry Pi on your own Linux machine,
-you can find the [general instructions to set up your RIOT development environment](https://doc.riot-os.org/getting-started.html)
-and the [specific ones for the Feather Sense](https://doc.riot-os.org/group__boards__feather-nrf52840-sense.html)
-in the RIOT documentation.
+### Recovering a Locked nrf52840 Chip
+In case your *nrf52840* is in a locked state and you're trying to program the device with *OpenOCD* you will get an error message like this:
+```
+Error: Could not find MEM-AP to control the core
+****** WARNING ******
+nRF52 device has AP lock engaged (see UICR APPROTECT register).
+Debug access is denied.
+Use 'nrf52_recover' to erase and unlock the device.
+```
+One possibility to do so is by calling
+```
+openocd -c 'interface jlink; transport select swd; source \
+[find target/nrf52.cfg]' -c 'init'  -c 'nrf52_recover'
+```
+Please note that this call will not automatically return. The output should look similar to this
+```
+Waiting for chip erase...
+nrf52.cpu device has been successfully erased and unlocked.
+Info : nrf52.cpu: hardware has 6 breakpoints, 4 watchpoints
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Error: nrf52.cpu -- clearing lockup after double fault
+Polling target nrf52.cpu failed, trying to reexamine
+Info : nrf52.cpu: hardware has 6 breakpoints, 4 watchpoints
+```
+Just exit via Ctrl+C and the device should be programmable via OpenOCD again. Another option is to use `nrfjprog --recover`. (However, note that both procedures will reset the entire flash of the device -- including the reset pin configuration.)
