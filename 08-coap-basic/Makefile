@@ -19,6 +19,11 @@ USEMODULE += gnrc_ipv6_default
 # add ICMPv6 support (ping)
 USEMODULE += gnrc_icmpv6_echo
 
+# add DHCPv6 client support
+USEMODULE += gnrc_dhcpv6_client_simple_pd
+USEMODULE += dhcpv6_client_ia_na
+USEMODULE += dhcpv6_client_ia_pd
+
 # add CoAP module
 USEMODULE += gcoap
 
